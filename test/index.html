@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<script src="socket.io-client/socket.io.js"></script>
+		<script>
+		  var socket = io('http://c.com:3000');
+		  socket.on('connect', function(){
+		  	//todo:连接成功
+		    socket.on('event', function(data){
+		    	console.log(data);
+		    });
+		    socket.on('polling',function(data){
+		    	console.log(data);
+		    });
+		    socket.on('disconnect', function(){});
+		  });
+		</script>
+	</body>
+</html>
