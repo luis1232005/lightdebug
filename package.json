@@ -19,6 +19,7 @@
   "author": "luis",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.10.2",
     "glob-watcher": "0.0.6",
     "socket.io": "^1.2.0"
   }
