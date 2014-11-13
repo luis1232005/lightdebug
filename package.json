@@ -1,0 +1,25 @@
+{
+  "name": "lightdebug",
+  "version": "0.0.1",
+  "description": "Is a lightweight architecture",
+  "main": "index.js",
+  "scripts": {
+    "test": "lightdebug test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "x"
+  },
+  "keywords": [
+    "lightdebug",
+    "css",
+    "sync",
+    "load"
+  ],
+  "author": "luis",
+  "license": "MIT",
+  "dependencies": {
+    "glob-watcher": "0.0.6",
+    "socket.io": "^1.2.0"
+  }
+}
