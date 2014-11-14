@@ -3,10 +3,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
+		<link rel="stylesheet" href="http://127.0.0.1/webresource/res/style/addon.css?v=20141114144703" />
 	</head>
 	<body>
 		<script src="socket.io-client/socket.io.js"></script>
 		<script>
+		  var links = document.getElementsByTagName("link"),
+		  	  len = links.length;
+		  console.log(links);
 		  var processMsg = {
 		  	msg:function(data){
 		  		console.log(data);
@@ -16,10 +20,50 @@
 		  		window.location.reload();
 		  	},
 		  	css:function(data){
-		  		console.log(data);
+		  		if(data && data.filename){
+		  			reloadCss(data.filename);
+		  		}
 		  	}
 		  }
-		  
+
+
+		  function getFileName(url){
+		  	var url = url.replace(/\//g,"\\");
+
+		  	return url.split('\\').pop().split('?').shift();
+		  }
+
+
+		  function getLinkEl(filename){
+		  	  var item = null,
+		  	  	  file  = '';
+		  	  for(var i=0;i<len;i++){
+		  	  	 item = links[i];
+		  	  	 file = getFileName(item.href);
+		  	  	 if(file === filename){
+		  	  	 	break;
+		  	  	 }
+		  	  }
+
+		  	  return item;
+		  }
+
+
+		  function reloadCss(filename){
+		  	var item = getLinkEl(filename),
+		  		link = null;
+
+		  	if(item){
+		  		link = document.createElement("link");
+		  		link.setAttribute("type","text/css");
+		  		link.setAttribute("rel","stylesheet"); 
+		  		link.href="http://c.com/webresource/res/style/" + filename +"?t="+new Date().getTime();
+
+		  		document.getElementsByTagName("head")[0].appendChild(link);
+		  	}
+		  }
+
+
 		  var socket = io('http://c.com:3000');
 		  socket.on('connect', function(){
 		  	console.log('尝试连接服务器...');
