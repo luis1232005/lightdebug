@@ -15,7 +15,9 @@ console.log(config);
 
 
 
-//开启监控
+/**
+ * 文件监控处理函数
+ */
 function watchInit(){
 	//定义
 	var watcher = watch(config.files);
@@ -27,17 +29,22 @@ function watchInit(){
 		ev.filename = filename || undefined;
 		ev.suffix = suffix || undefined;
 
-		console.log(ev);
+		//通知客户端文件已经修改
+		io.emit('message',{type:ev.suffix,data:ev});
+		console.log(new Date().toString()+":["+ev.suffix+"]"+filename+"已经修改！\n");
 	});
 }
 
-watchInit();
 
-// //监听连接服务
-// io.on('connection', function(){ 
-// 	console.log("connectioned");
-// 	io.emit("event",{"ll":"ishead"});
+/**
+ * 开启监听客户端连接
+ */
+io.on('connection', function(){ 
+	console.log(new Date().toString()+":客户端连接成功！\n");
 
-// 	//polling();
-// });
-// server.listen(3000);
+	//开启文件监控
+	watchInit();
+	io.emit("message",{type:"msg",data:{}});
+});
+server.listen(3000);
+

@@ -1,21 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cn">
 	<head>
+		<meta charset="utf-8" />
 		<title></title>
 	</head>
 	<body>
 		<script src="socket.io-client/socket.io.js"></script>
 		<script>
+		  var processMsg = {
+		  	msg:function(data){
+		  		console.log(data);
+		  	},
+		  	js:function(data){
+		  		console.log(data);
+		  		window.location.reload();
+		  	},
+		  	css:function(data){
+		  		console.log(data);
+		  	}
+		  }
+		  
 		  var socket = io('http://c.com:3000');
 		  socket.on('connect', function(){
-		  	//todo:连接成功
-		    socket.on('event', function(data){
-		    	console.log(data);
+		  	console.log('尝试连接服务器...');
+
+		  	//开启监听函数
+		    socket.on('message', function(data){
+		    	var name  = data.type.toLowerCase();
+		    	if(processMsg && processMsg[name]){
+		    		processMsg[name](data.data);
+		    	}
 		    });
-		    socket.on('polling',function(data){
-		    	console.log(data);
-		    });
-		    socket.on('disconnect', function(){});
 		  });
 		</script>
 	</body>
