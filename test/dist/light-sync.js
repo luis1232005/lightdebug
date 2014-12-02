@@ -6251,6 +6251,10 @@ function toArray(list, index) {
 (1)
 });
 
+window.onerror = function(msg){
+    alert(msg);
+    console.log(arguments);
+};
 
 window.onload = function(){
   var links = document.getElementsByTagName("link"),
